@@ -13,6 +13,10 @@ def check_image_exists(image_path):
         return False
     return True
 
+def read_file(filepath):
+    with open(filepath, 'r') as file:
+        return file.read().strip()
+
 def compare_images(base_path, test_path, output_path=None):
     # Check if input images exist
     if not check_image_exists(base_path) or not check_image_exists(test_path):
@@ -83,14 +87,18 @@ def compare_images(base_path, test_path, output_path=None):
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: python compare_images.py <base_image> <test_image>")
+        print("Usage: python compare_images.py <expected.out> <output.out>")
         sys.exit(1)
         
-    base_image = Path(sys.argv[1])
-    test_image = Path(sys.argv[2])
-    diff_output = Path('difference.png')
+    expected_file = Path(sys.argv[1])
+    output_file = Path(sys.argv[2])
     
     try:
+        # Read image paths from files
+        base_image = Path(read_file(expected_file))
+        test_image = Path(read_file(output_file))
+        diff_output = Path('difference.png')
+        
         # Compare images
         metrics = compare_images(base_image, test_image, diff_output)
         
@@ -109,8 +117,9 @@ def main():
     except Exception as e:
         print(f'\nError: {str(e)}')
         print("\nPlease make sure:")
-        print("1. The image files exist and are readable")
-        print("2. You have ImageMagick installed and available in your PATH")
+        print("1. The input files exist and are readable")
+        print("2. The image files referenced in the input files exist and are readable")
+        print("3. You have ImageMagick installed and available in your PATH")
         sys.exit(1)
 
 if __name__ == '__main__':
