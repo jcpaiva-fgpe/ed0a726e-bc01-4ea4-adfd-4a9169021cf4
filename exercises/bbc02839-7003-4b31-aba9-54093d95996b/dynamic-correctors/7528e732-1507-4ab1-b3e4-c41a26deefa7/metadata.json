@@ -1,1 +1,1 @@
-{"id":"7528e732-1507-4ab1-b3e4-c41a26deefa7","pathname":"compare_images.py","command_line":"python3 $home/compare_images.py $expected $obtained"}
+{"id":"7528e732-1507-4ab1-b3e4-c41a26deefa7","pathname":"compare_images.py","command_line":"python3 $home/scripts/compare_images.py $expected $obtained"}
